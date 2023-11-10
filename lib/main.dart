@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +21,8 @@ class Body extends StatelessWidget {
         TestCheckBox(),
         TestRadioButton(),
         TestSlider(),
-
+        TestSwitch(),
+        TestPopupMenu(),
       ],
     );
   }
@@ -148,3 +150,61 @@ class _TestSliderState extends State<TestSlider> {
     );
   }
 }
+
+class TestSwitch extends StatefulWidget {
+  const TestSwitch({super.key});
+
+  @override
+  State<TestSwitch> createState() => _TestSwitchState();
+}
+
+class _TestSwitchState extends State<TestSwitch> {
+  bool value = false;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Switch(
+            value: value,
+            onChanged: (newValue) => setState(() => value = newValue)),
+        CupertinoSwitch(
+            value: value,
+            onChanged: (newValue) => setState(() => value = newValue)),
+      ],
+    );
+  }
+}
+
+class TestPopupMenu extends StatefulWidget {
+  const TestPopupMenu({super.key});
+
+  @override
+  State<TestPopupMenu> createState() => _TestPopupMenuState();
+}
+
+// shift+F6 DLFMAEK QKrNRL
+enum TestValue {
+  test1,
+  test2,
+  test3;
+}
+
+class _TestPopupMenuState extends State<TestPopupMenu> {
+  TestValue selectValue = TestValue.test1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(selectValue.name),
+        PopupMenuButton(itemBuilder: (context) {
+          return TestValue.values.map((value) => PopupMenuItem(value: value, child: Text(value.name))).toList();
+        },
+        onSelected: (newValue) => setState(() => selectValue = newValue),
+        ),
+      ],
+    );
+  }
+}
+
